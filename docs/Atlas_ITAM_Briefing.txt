@@ -1,0 +1,109 @@
+Projeto: Atlas ITAM – Enterprise IT Asset Lifecycle Platform
+
+Versão: 2.0
+Data: 2026-07-17
+Padrão Arquitetural: CQRS com MediatR
+
+Visão Geral
+
+Atlas ITAM é uma plataforma web para gestão do ciclo de vida de ativos
+de TI (ITAM). O objetivo é centralizar o controle de equipamentos,
+licenças e movimentações, substituindo planilhas por um sistema
+corporativo com rastreabilidade, aprovações e dashboards.
+
+Problema
+
+Empresas precisam controlar notebooks, monitores, celulares, servidores,
+switches, roteadores, impressoras e licenças de software. Sem um sistema
+adequado, é difícil saber: - Quem está usando um ativo. - Onde ele está
+localizado. - Quando a garantia vence. - Qual o histórico de
+manutenções. - Quais licenças ainda estão disponíveis.
+
+Público-alvo
+
+-   Empresas de médio e grande porte
+-   Equipes de TI
+-   Gestores de infraestrutura
+-   RH (onboarding e offboarding)
+-   Facilities
+
+Fluxo do Ciclo de Vida
+
+Compra ↓ Recebimento ↓ Cadastro ↓ Estoque ↓ Solicitação ↓ Aprovação ↓
+Entrega ↓ Uso ↓ Manutenção ↓ Transferência ↓ Devolução ↓ Baixa
+
+Funcionalidades do MVP
+
+-   Autenticação e controle de acesso por perfis.
+-   Cadastro de ativos.
+-   Controle de patrimônio e número de série.
+-   Catálogo de categorias de ativos.
+-   Controle de estoque.
+-   Solicitação de equipamentos.
+-   Aprovação por gestor.
+-   Entrega com termo em PDF.
+-   Histórico completo de movimentações.
+-   Dashboard com indicadores.
+-   Auditoria de ações.
+
+Categorias de Ativos
+
+-   Notebooks
+-   Desktops
+-   Monitores
+-   Celulares
+-   Tablets
+-   Dock Stations
+-   Impressoras
+-   Servidores
+-   Switches
+-   Firewalls
+-   Roteadores
+-   Licenças de Software
+-   Periféricos
+
+Evoluções Futuras
+
+-   Gestão de garantias e contratos.
+-   Gestão de licenças (Microsoft 365, Adobe etc.).
+-   QR Code para identificação de ativos.
+-   Onboarding e offboarding.
+-   Integração com Help Desk.
+-   Inventário automático.
+-   Notificações e alertas.
+
+Tecnologias
+
+Backend:
+- C# 
+- .NET 8
+- ASP.NET Core Web API
+- Entity Framework Core 8
+- PostgreSQL 14+
+- MediatR 12.2.0 (CQRS)
+- AutoMapper 12.0.1
+- FluentValidation 11.9.0
+- QuestPDF
+- JWT Authentication
+
+Frontend:
+- Next.js 14+
+- TypeScript
+- Styled Components 6
+- React Query (TanStack Query) 5
+- React Hook Form + Zod
+- Axios
+
+Arquitetura
+
+- Padrão: CQRS (Command Query Responsibility Segregation)
+- Mediator: MediatR
+- Validação: Pipeline Behaviors
+- Classes: Sealed por padrão
+- Variáveis: `var` quando tipo é óbvio
+
+Objetivo do Portfólio
+
+Demonstrar domínio de modelagem de domínio, arquitetura CQRS, workflows,
+controle de permissões, auditoria e desenvolvimento de aplicações
+corporativas utilizadas no mercado.
