@@ -9,6 +9,7 @@ public interface IAssetRepository
     Task<Asset?> GetByPatrimonyNumberAsync(string patrimonyNumber, CancellationToken cancellationToken = default);
     Task<Asset?> GetBySerialNumberAsync(string serialNumber, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Asset>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<(IReadOnlyList<Asset> Items, int TotalCount)> GetAllAsync(string? search, AssetStatus? status, Guid? categoryId, Guid? locationId, int page, int pageSize, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Asset>> GetByStatusAsync(AssetStatus status, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Asset>> GetByCategoryAsync(Guid categoryId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Asset>> GetByLocationAsync(Guid locationId, CancellationToken cancellationToken = default);

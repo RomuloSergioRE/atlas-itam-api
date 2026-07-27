@@ -53,6 +53,40 @@ public sealed class AssetRepository : IAssetRepository
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<(IReadOnlyList<Asset> Items, int TotalCount)> GetAllAsync(
+        string? search, AssetStatus? status, Guid? categoryId, Guid? locationId,
+        int page, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var query = _context.Assets
+            .Include(a => a.Category)
+            .Include(a => a.Location)
+            .Include(a => a.CurrentUser)
+            .Where(a => !a.IsDeleted)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+            query = query.Where(a => a.Name.Contains(search) || a.PatrimonyNumber.Contains(search) || a.SerialNumber.Contains(search));
+
+        if (status.HasValue)
+            query = query.Where(a => a.Status == status.Value);
+
+        if (categoryId.HasValue)
+            query = query.Where(a => a.CategoryId == categoryId.Value);
+
+        if (locationId.HasValue)
+            query = query.Where(a => a.LocationId == locationId.Value);
+
+        var totalCount = await query.CountAsync(cancellationToken);
+
+        var items = await query
+            .OrderBy(a => a.Name)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return (items, totalCount);
+    }
+
     public async Task<IReadOnlyList<Asset>> GetByStatusAsync(AssetStatus status, CancellationToken cancellationToken = default)
     {
         return await _context.Assets
