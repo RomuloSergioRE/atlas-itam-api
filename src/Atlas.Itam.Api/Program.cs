@@ -87,6 +87,9 @@ var applicationAssembly = typeof(Atlas.Itam.Application.Common.Results.Result).A
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(applicationAssembly));
 
+// Configure AutoMapper
+builder.Services.AddAutoMapper(applicationAssembly);
+
 // Configure FluentValidation
 builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
