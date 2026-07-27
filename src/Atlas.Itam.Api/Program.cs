@@ -53,6 +53,7 @@ builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
 // Configure Services
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 // Configure JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
