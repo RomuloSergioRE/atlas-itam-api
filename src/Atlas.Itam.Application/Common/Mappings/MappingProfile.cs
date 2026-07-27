@@ -30,5 +30,7 @@ public sealed class MappingProfile : Profile
 
         CreateMap<User, DTOs.Users.UserDto>()
             .ForMember(d => d.DepartmentName, opt => opt.MapFrom(s => s.Department != null ? s.Department.Name : null));
+
+        CreateMap<AssetCategory, DTOs.Assets.CategoryDto>();
     }
 }
