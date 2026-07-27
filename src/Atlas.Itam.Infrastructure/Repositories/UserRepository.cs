@@ -37,6 +37,26 @@ public sealed class UserRepository : IUserRepository
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<(IReadOnlyList<User> Items, int TotalCount)> GetAllAsync(string? search, int page, int pageSize, CancellationToken cancellationToken = default)
+    {
+        var query = _context.Users
+            .Include(u => u.Department)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+            query = query.Where(u => u.Name.Contains(search) || u.Email.Contains(search));
+
+        var totalCount = await query.CountAsync(cancellationToken);
+
+        var items = await query
+            .OrderBy(u => u.Name)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return (items, totalCount);
+    }
+
     public async Task<IReadOnlyList<User>> GetByDepartmentAsync(Guid departmentId, CancellationToken cancellationToken = default)
     {
         return await _context.Users
@@ -71,6 +91,12 @@ public sealed class UserRepository : IUserRepository
     public async Task UpdateAsync(User user, CancellationToken cancellationToken = default)
     {
         _context.Users.Update(user);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task DeleteAsync(User user, CancellationToken cancellationToken = default)
+    {
+        _context.Users.Remove(user);
         await _context.SaveChangesAsync(cancellationToken);
     }
 

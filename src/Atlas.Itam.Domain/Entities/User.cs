@@ -40,12 +40,13 @@ public sealed class User
         };
     }
 
-    public void Update(string name, string email, UserRole role, Guid departmentId)
+    public void Update(string name, string email, UserRole role, Guid departmentId, bool isActive)
     {
         Name = name;
         Email = email;
         Role = role;
         DepartmentId = departmentId;
+        IsActive = isActive;
         UpdatedAt = DateTime.UtcNow;
     }
 
