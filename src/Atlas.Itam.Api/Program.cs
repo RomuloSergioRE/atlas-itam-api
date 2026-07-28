@@ -114,6 +114,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Global exception handling
+app.UseMiddleware<Atlas.Itam.Api.Middleware.ExceptionHandlingMiddleware>();
+
+// Correlation ID
+app.UseMiddleware<Atlas.Itam.Api.Middleware.CorrelationIdMiddleware>();
+
 // Seed initial data
 using (var scope = app.Services.CreateScope())
 {
