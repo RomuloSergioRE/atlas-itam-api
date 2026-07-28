@@ -1,6 +1,7 @@
 using Atlas.Itam.Application.Common.Interfaces;
 using Atlas.Itam.Application.DTOs.Requests;
 using Atlas.Itam.Domain.Entities;
+using Atlas.Itam.Domain.Enums;
 using Atlas.Itam.Domain.Interfaces;
 using AutoMapper;
 
@@ -24,8 +25,18 @@ public sealed class CreateRequestCommandHandler : ICommandHandler<CreateRequestC
 
     public async Task<RequestDto> Handle(CreateRequestCommand request, CancellationToken cancellationToken)
     {
+        var pendingCount = await _requestRepository.CountPendingByUserAsync(request.RequestedById, cancellationToken);
+        if (pendingCount >= 3)
+            throw new Atlas.Itam.Domain.Errors.ConflictError("Maximum of 3 pending requests per user");
+
         var asset = await _assetRepository.GetByIdAsync(request.AssetId, cancellationToken)
             ?? throw new Atlas.Itam.Domain.Errors.NotFoundError("Asset not found");
+
+        if (asset.CurrentUserId == request.RequestedById)
+            throw new Atlas.Itam.Domain.Errors.ConflictError("Cannot request an asset already assigned to you");
+
+        if (asset.Status != AssetStatus.Available)
+            throw new Atlas.Itam.Domain.Errors.ConflictError("Asset is not available for request");
 
         if (await _requestRepository.HasActiveRequestForAssetAsync(request.AssetId, cancellationToken))
             throw new Atlas.Itam.Domain.Errors.ConflictError("Asset already has an active request");
