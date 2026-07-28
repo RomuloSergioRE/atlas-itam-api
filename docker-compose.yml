@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:14
+    container_name: atlas_itam_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: atlas_itam
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: atlas_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: atlas_itam_api
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=atlas_itam;Username=atlas;Password=atlas_secret
+
+volumes:
+  pgdata:
