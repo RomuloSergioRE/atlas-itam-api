@@ -5,6 +5,7 @@ using Atlas.Itam.Domain.Interfaces;
 using Atlas.Itam.Infrastructure.Auth;
 using Atlas.Itam.Infrastructure.Data;
 using Atlas.Itam.Infrastructure.Repositories;
+using Atlas.Itam.Infrastructure.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -55,6 +56,7 @@ builder.Services.AddScoped<IAssetMovementRepository, AssetMovementRepository>();
 // Configure Services
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 
 // Configure JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
