@@ -120,6 +120,9 @@ app.UseMiddleware<Atlas.Itam.Api.Middleware.ExceptionHandlingMiddleware>();
 // Correlation ID
 app.UseMiddleware<Atlas.Itam.Api.Middleware.CorrelationIdMiddleware>();
 
+// JWT User extraction
+app.UseMiddleware<Atlas.Itam.Api.Middleware.JwtUserMiddleware>();
+
 // Seed initial data
 using (var scope = app.Services.CreateScope())
 {
