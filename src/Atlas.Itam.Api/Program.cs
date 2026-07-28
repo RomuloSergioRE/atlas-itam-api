@@ -50,6 +50,7 @@ builder.Services.AddScoped<IAuditRepository, AuditRepository>();
 builder.Services.AddScoped<IAssetCategoryRepository, AssetCategoryRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IAssetMovementRepository, AssetMovementRepository>();
 
 // Configure Services
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
