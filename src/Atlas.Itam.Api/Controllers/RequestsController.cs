@@ -3,6 +3,7 @@ using Atlas.Itam.Application.Commands.Requests.CreateRequest;
 using Atlas.Itam.Application.Commands.Requests.DeliverRequest;
 using Atlas.Itam.Application.Commands.Requests.RejectRequest;
 using Atlas.Itam.Application.Commands.Requests.ReturnRequest;
+using Atlas.Itam.Application.Queries.Requests.GetDeliveryTerm;
 using Atlas.Itam.Application.Queries.Requests.GetRequestById;
 using Atlas.Itam.Application.Queries.Requests.GetRequests;
 using Atlas.Itam.Application.Queries.Requests.ListPendingApprovals;
@@ -88,6 +89,13 @@ public sealed class RequestsController : ControllerBase
 
         await _mediator.Send(new DeliverRequestCommand(id, userId.Value));
         return NoContent();
+    }
+
+    [HttpGet("{id:guid}/delivery-term")]
+    public async Task<IActionResult> GetDeliveryTerm(Guid id)
+    {
+        var pdf = await _mediator.Send(new GetDeliveryTermQuery(id));
+        return File(pdf, "application/pdf", $"delivery-term-{id}.pdf");
     }
 
     [HttpPut("{id:guid}/return")]
