@@ -39,4 +39,10 @@ public sealed class DepartmentRepository : IDepartmentRepository
         _context.Departments.Update(department);
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task DeleteAsync(Department department, CancellationToken cancellationToken = default)
+    {
+        _context.Departments.Remove(department);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }

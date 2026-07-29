@@ -35,5 +35,8 @@ public sealed class MappingProfile : Profile
 
         CreateMap<AuditLog, DTOs.Dashboard.AuditLogDto>()
             .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.User != null ? s.User.Name : null));
+
+        CreateMap<Location, DTOs.Locations.LocationDto>();
+        CreateMap<Department, DTOs.Departments.DepartmentDto>();
     }
 }

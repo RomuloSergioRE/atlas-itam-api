@@ -8,4 +8,5 @@ public interface IDepartmentRepository
     Task<IReadOnlyList<Department>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<Guid> AddAsync(Department department, CancellationToken cancellationToken = default);
     Task UpdateAsync(Department department, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Department department, CancellationToken cancellationToken = default);
 }

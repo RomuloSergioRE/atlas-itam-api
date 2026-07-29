@@ -8,4 +8,5 @@ public interface ILocationRepository
     Task<IReadOnlyList<Location>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<Guid> AddAsync(Location location, CancellationToken cancellationToken = default);
     Task UpdateAsync(Location location, CancellationToken cancellationToken = default);
+    Task DeleteAsync(Location location, CancellationToken cancellationToken = default);
 }

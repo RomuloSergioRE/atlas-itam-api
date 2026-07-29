@@ -39,4 +39,10 @@ public sealed class LocationRepository : ILocationRepository
         _context.Locations.Update(location);
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task DeleteAsync(Location location, CancellationToken cancellationToken = default)
+    {
+        _context.Locations.Remove(location);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }
