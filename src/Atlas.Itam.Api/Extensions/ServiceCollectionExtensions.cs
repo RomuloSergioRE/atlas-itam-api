@@ -35,6 +35,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IPdfService, PdfService>();
+        services.AddScoped<IEmailService, SmtpEmailService>();
+        services.AddSingleton<PasswordResetTokenStore>();
 
         return services;
     }

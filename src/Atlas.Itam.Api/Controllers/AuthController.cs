@@ -1,3 +1,4 @@
+using Atlas.Itam.Application.Commands.Auth;
 using Atlas.Itam.Application.Commands.Auth.Login;
 using Atlas.Itam.Application.Commands.Auth.Logout;
 using Atlas.Itam.Application.Commands.Auth.RefreshToken;
@@ -32,6 +33,22 @@ public sealed class AuthController : ControllerBase
     {
         var result = await _mediator.Send(command);
         return Ok(result);
+    }
+
+    [HttpPost("forgot-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
+    {
+        await _mediator.Send(command);
+        return Ok(new { message = "If the email exists, a reset link has been sent" });
+    }
+
+    [HttpPost("reset-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
+    {
+        await _mediator.Send(command);
+        return Ok(new { message = "Password has been reset successfully" });
     }
 
     [HttpPost("logout")]

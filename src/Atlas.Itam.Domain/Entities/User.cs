@@ -61,4 +61,10 @@ public sealed class User
         IsActive = true;
         UpdatedAt = DateTime.UtcNow;
     }
+
+    public void SetPassword(string passwordHash)
+    {
+        PasswordHash = passwordHash;
+        UpdatedAt = DateTime.UtcNow;
+    }
 }
