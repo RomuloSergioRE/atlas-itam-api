@@ -26,6 +26,7 @@ public sealed class WarrantyAlertDto
     public string PatrimonyNumber { get; set; } = string.Empty;
     public DateTime WarrantyUntil { get; set; }
     public int DaysUntilExpiration { get; set; }
+    public string Severity { get; set; } = string.Empty;
     public string? CurrentUserName { get; set; }
 }
 
