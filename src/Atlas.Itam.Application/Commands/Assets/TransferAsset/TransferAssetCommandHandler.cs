@@ -21,6 +21,9 @@ public sealed class TransferAssetCommandHandler : ICommandHandler<TransferAssetC
         var asset = await _assetRepository.GetByIdAsync(request.AssetId, cancellationToken)
             ?? throw new Atlas.Itam.Domain.Errors.NotFoundError("Asset not found");
 
+        if (asset.Status == AssetStatus.Retired)
+            throw new Atlas.Itam.Domain.Errors.ConflictError("Cannot transfer a retired asset");
+
         if (asset.CurrentUserId != request.FromUserId)
             throw new Atlas.Itam.Domain.Errors.ConflictError("Asset is not assigned to the specified user");
 

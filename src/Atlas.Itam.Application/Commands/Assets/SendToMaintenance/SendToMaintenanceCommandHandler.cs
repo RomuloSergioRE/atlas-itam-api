@@ -21,6 +21,9 @@ public sealed class SendToMaintenanceCommandHandler : ICommandHandler<SendToMain
         var asset = await _assetRepository.GetByIdAsync(request.AssetId, cancellationToken)
             ?? throw new Atlas.Itam.Domain.Errors.NotFoundError("Asset not found");
 
+        if (asset.Status == AssetStatus.Retired)
+            throw new Atlas.Itam.Domain.Errors.ConflictError("Cannot send a retired asset to maintenance");
+
         var movement = AssetMovement.Create(
             MovementType.Maintenance,
             request.AssetId,
