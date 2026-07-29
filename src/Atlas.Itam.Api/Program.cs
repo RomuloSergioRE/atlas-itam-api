@@ -1,5 +1,6 @@
 using Atlas.Itam.Api.Extensions;
 using Atlas.Itam.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Threading.RateLimiting;
@@ -75,7 +76,7 @@ app.UseMiddleware<Atlas.Itam.Api.Middleware.JwtUserMiddleware>();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await context.Database.EnsureCreatedAsync();
+    await context.Database.MigrateAsync();
     await SeedData.InitializeAsync(context);
 }
 

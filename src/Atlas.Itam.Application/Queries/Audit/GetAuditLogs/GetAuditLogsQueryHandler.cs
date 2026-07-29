@@ -22,6 +22,10 @@ public sealed class GetAuditLogsQueryHandler : IQueryHandler<GetAuditLogsQuery, 
 
         if (request.From.HasValue && request.To.HasValue)
             logs = await _auditRepository.GetByDateRangeAsync(request.From.Value, request.To.Value, cancellationToken);
+        else if (request.UserId.HasValue)
+            logs = await _auditRepository.GetByUserAsync(request.UserId.Value, cancellationToken);
+        else if (request.Action.HasValue)
+            logs = await _auditRepository.GetByActionAsync(request.Action.Value, cancellationToken);
         else
             logs = await _auditRepository.GetAllAsync(cancellationToken);
 
